@@ -1,0 +1,26 @@
+version: '3'
+services:
+  feeds:
+    image: jogadores
+    build: ./dockerfiles/servicos
+    hostname: feeds
+    volumes:
+      - './feeds:/servico'
+    command: python3 servico.py
+    ports:
+      - '5001:5000'
+  bancodados:
+    image: mysql
+    hostname: bancodados
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - '6001:3306'
+  arquivos:
+    image: arquivos
+    build: ./dockerfiles/nginx
+    volumes:
+      - './assets/fotos:/usr/share/nginx/html'
+    hostname: arquivos
+    ports:
+      - '5004:80'
